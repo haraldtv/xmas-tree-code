@@ -1,0 +1,13 @@
+train: ../train/images
+val: ../valid/images
+test: ../test/images
+
+nc: 3
+names: ['glitter-bauble', 'glossy-bauble', 'wine-red-bauble']
+
+roboflow:
+  workspace: workspace-6sywk
+  project: elve3610-christmas-baubles
+  version: 1
+  license: CC BY 4.0
+  url: https://universe.roboflow.com/workspace-6sywk/elve3610-christmas-baubles/dataset/1
