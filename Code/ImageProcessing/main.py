@@ -8,8 +8,7 @@ from object_diameter import diameter
 from distance import distance
 from calculateangle import calculatePos
 
-while 1:
-    print(1)
+print("v 0.7")
 
 
 
