@@ -2,13 +2,14 @@ import cv2 as cv2
 import numpy as np
 from ultralytics import YOLO
 
-from detectxy import findxy
-from mergecoordinates import merge
-from object_diameter import diameter
-from distance import distance
-from calculateangle import calculatePos
+# from detectxy import findxy
+# from mergecoordinates import merge
+# from object_diameter import diameter
+# from distance import distance
+# from calculateangle import calculatePos
 
 print("v 0.7")
+
 
 
 

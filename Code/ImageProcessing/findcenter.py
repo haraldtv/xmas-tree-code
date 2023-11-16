@@ -31,8 +31,8 @@ def findcenter(linear):
         zrelation = 0.05 / (b2-b1)
         yrelation = 0.05 / (a2-a1)
 
-        deltay = (width / 2) - a3*yrelation
-        deltaz = (height / 2) - b3*zrelation
+        deltay = ( (width / 2) - a3 ) * yrelation
+        deltaz = ( (height / 2) - b3 ) * zrelation
 
         p[1] = deltay
         p[2] = deltaz
@@ -42,13 +42,35 @@ def findcenter(linear):
         return (p)
     
     elif (linear == 0):
+        HORIZONTAL = 2
+        VERTICAL = 3
+
         cam = cv2.VideoCapture(0)
+
         p = readPos()
         ret, frame = cam.read()
         height, width = frame.shape[:2]
         d1, a1, b1, = diameter(frame)
 
+        # Calibrate horizontal joint angle
+        sendJoint([HORIZONTAL, np.pi/8])
+        ret, frame = cam.read()
+        d2, a2, b2, = diameter(frame)
         
+        hrelation = (np.pi/8) / (b2-b1)
+        deltah = ( (width / 2) - a2 ) * hrelation
+        sendJoint([HORIZONTAL, deltah])
+        
+        # Calibrate vertical joint
+        ret, frame = cam.read()
+        d3, a3, b3, = diameter(frame)
+        
+        sendJoint([VERTICAL, np.pi/8])
+        ret, frame = cam.read()
+        d, a4, b4, = diameter(frame)
 
+        vrelation = (np.pi/8) / (b2-b1)
+        deltav = ( (height / 2) - a2 ) * vrelation
+        sendJoint([VERTICAL, deltav])
 
-
+        return (deltah + np.pi/8, deltav + np.pi/8)

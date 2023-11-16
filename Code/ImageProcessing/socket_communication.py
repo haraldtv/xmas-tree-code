@@ -42,3 +42,17 @@ def sendPos(p):
     dataInput = p
     Client.send(str(dataInput).encode())
     return 0
+
+def sendJoint(p):
+    Server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    print("Socket started")
+    Server.bind((HOST, PORT))
+    print("Socket bound")
+    Server.listen()
+    print("Server listening")
+    Client, addr = Server.accept()
+    print(f"Socket accepted, client {Client}:{addr} connected")
+    dataInput = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+    dataInput[p[0]] = p[1]
+    Client.send(str(dataInput).encode())
+    return 0
