@@ -15,7 +15,7 @@ def distance(frame):
     origo_x = frame.shape[0] / 2
     origo_y = frame.shape[1] / 2
 
-    x = 2
+    x = [1,2]
 
     if len(x) == 2:
         x = linearInterp[0]
