@@ -4,15 +4,10 @@ import cv2
 from ultralytics import YOLO
 from leastsquarecircle import mls
 
-def diameter(image, mode):
+def diameter(image, debug):
     OBJECT = 41
     # model = YOLO('/Users/harald/Documents/GitHub/xmas-tree-decorator/Code/Model/runs/detect/train/weights/last.pt')
     model = YOLO('/Users/harald/Documents/GitHub/xmas-tree-decorator/Code/ImageProcessing/kevin2023-11-10.pt')
-
-    if mode == 1:
-        frame = cv2.imread(image, cv2.IMREAD_COLOR)
-    elif mode == 0:
-        frame = image
 
     results = model(image)
     x = []
@@ -42,6 +37,10 @@ def diameter(image, mode):
 
     print(np.block([x,y]).tolist())
     circle = mls(np.block([x,y]).tolist())
+
+    if debug == 1:
+        return circle[2] * 2, circle[0], circle[1]
+
 
     fig, ax = plt.subplots()
     ax.scatter(xp,yp)

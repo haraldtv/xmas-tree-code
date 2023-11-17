@@ -1,16 +1,22 @@
 import cv2 as cv2 
 import numpy as np
 from ultralytics import YOLO
+import socket
 
 # from detectxy import findxy
 # from mergecoordinates import merge
 # from object_diameter import diameter
-# from distance import distance
+from distance import distance
 # from calculateangle import calculatePos
+from findcenter import findcenter
 
 print("v 0.7")
 
-
+Server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+findcenter(1, Server)
+cam = cv2.VideoCapture(0)
+ret, frame = cam.read()
+d = distance(frame)
 
 
 # print(diameter("/Users/harald/Documents/GitHub/xmas-tree-decorator/Code/ImageProcessing/cup_65.png"))

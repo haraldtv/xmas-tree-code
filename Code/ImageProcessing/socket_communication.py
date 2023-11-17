@@ -16,8 +16,8 @@ def postolist(str):
     return lst
 
 
-def readPos():
-    Server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+def readPos(Server):
+    # Server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     print("Socket started")
     Server.bind((HOST, PORT))
     print("Socket bound")
@@ -30,8 +30,8 @@ def readPos():
     Server.close()
     return postolist(dataFromClient)
 
-def sendPos(p):
-    Server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+def sendPos(p, Server):
+    # Server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     print("Socket started")
     Server.bind((HOST, PORT))
     print("Socket bound")
@@ -43,8 +43,8 @@ def sendPos(p):
     Client.send(str(dataInput).encode())
     return 0
 
-def sendJoint(p):
-    Server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+def sendJoint(p, Server):
+    # Server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     print("Socket started")
     Server.bind((HOST, PORT))
     print("Socket bound")

@@ -2,8 +2,9 @@ import numpy as np
 
 from distance import distance
 
-def calculatePos(x, y, z, v1, v2, v3, d):
-    theta = v1
+def calculatePos(x, y, z, t1, t2, t3, d):
+    theta = t1
+    alpha = t2
 
     yp = np.cos(theta) * d
     xp = np.sin(theta) * d

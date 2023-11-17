@@ -4,10 +4,10 @@ import cv2
 from object_diameter import diameter
 from socket_communication import sendPos, sendJoint, readPos
 
-def findcenter(linear):
+def findcenter(linear, Server):
     if linear == 1:
         cam = cv2.VideoCapture(0)
-        p = readPos()
+        p = readPos(Server)
         ret, frame = cam.read()
         height, width = frame.shape[:2]
 
@@ -16,14 +16,14 @@ def findcenter(linear):
 
         # Move robot 5cm along z axis
         p[3] += 0.05
-        sendPos(p)
+        sendPos(p, Server)
         # Get current location of object in frame
         ret, frame = cam.read()
         d2, a2, b2, = diameter(frame)
 
         # Move robot 5cm along y axis
         p[1] += 0.05
-        sendPos(p)
+        sendPos(p, Server)
 
         ret, frame = cam.read()
         d3, a3, b3, = diameter(frame)
@@ -37,7 +37,7 @@ def findcenter(linear):
         p[1] = deltay
         p[2] = deltaz
 
-        sendPos(p)
+        sendPos(p, Server)
 
         return (p)
     
@@ -47,30 +47,30 @@ def findcenter(linear):
 
         cam = cv2.VideoCapture(0)
 
-        p = readPos()
+        p = readPos(Server)
         ret, frame = cam.read()
         height, width = frame.shape[:2]
         d1, a1, b1, = diameter(frame)
 
         # Calibrate horizontal joint angle
-        sendJoint([HORIZONTAL, np.pi/8])
+        sendJoint([HORIZONTAL, np.pi/8], Server)
         ret, frame = cam.read()
         d2, a2, b2, = diameter(frame)
         
         hrelation = (np.pi/8) / (b2-b1)
         deltah = ( (width / 2) - a2 ) * hrelation
-        sendJoint([HORIZONTAL, deltah])
+        sendJoint([HORIZONTAL, deltah], Server)
         
         # Calibrate vertical joint
         ret, frame = cam.read()
         d3, a3, b3, = diameter(frame)
         
-        sendJoint([VERTICAL, np.pi/8])
+        sendJoint([VERTICAL, np.pi/8], Server)
         ret, frame = cam.read()
         d, a4, b4, = diameter(frame)
 
         vrelation = (np.pi/8) / (b2-b1)
         deltav = ( (height / 2) - a2 ) * vrelation
-        sendJoint([VERTICAL, deltav])
+        sendJoint([VERTICAL, deltav], Server)
 
         return (deltah + np.pi/8, deltav + np.pi/8)
