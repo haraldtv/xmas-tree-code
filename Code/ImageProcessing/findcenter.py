@@ -7,10 +7,24 @@ from socket_communication import sendPos, sendJoint, readPos, readAck
 def emptyCord():
     return [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
 
+# Function to translate between "camera" coordinate plane and the robots coordinate plane. These are offset by 45degrees
+def transformxy(q):
+    r = emptyCord()
+    # x value
+    r[0] += q[0] / 2
+    r[1] += q[0] / 2
+    # y value
+    r[0] += q[1] / 2
+    r[1] -= q[1] / 2
+    return r
+
+# This finds the christmas ornamnt assuming the camera has the christmas ornaments in frame and is orientet roughly in front of the ornament
+# 
 def findcenter(linear, Client):
     if linear == 1:
         cam = cv2.VideoCapture(0)
         p = readPos(Client)
+        p1 = p
         q = emptyCord()
         print("Position 1: ", p)
         ret, frame = cam.read()
@@ -23,7 +37,7 @@ def findcenter(linear, Client):
         p[2] += 0.025
         q[2] = 0.025
         print("Position 2: ", p)
-        sendPos(q, Client)
+        sendPos(transformxy(q), Client)
         readAck(Client)
         # Get current location of object in frame
         ret, frame = cam.read()
@@ -32,10 +46,9 @@ def findcenter(linear, Client):
         # Move robot 5cm along y axis
         p[1] += 0.05
         q = emptyCord()
-        q[0] = 0.025
-        q[1] = 0.025
+        q[1] = 0.05
         print("Position 3: ", q)
-        sendPos(q, Client)
+        sendPos(transformxy(q), Client)
         readAck(Client)
 
         ret, frame = cam.read()
@@ -51,11 +64,10 @@ def findcenter(linear, Client):
         p[1] = deltay
         p[2] = deltaz
 
-        q[0] = deltay/2
-        q[1] = deltay/2
-        q[2] = deltaz/2
+        q[1] = deltay
+        q[2] = deltaz
 
-        sendPos(q, Client)
+        sendPos(transformxy(q), Client)
         readAck(Client)
 
         return (p)
