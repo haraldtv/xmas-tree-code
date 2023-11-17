@@ -53,15 +53,9 @@ def sendConf(Server):
     Client.send(str(dataInput).encode())
     return 0
 
-def recvConf(Server):
-    # Server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    print("Socket started")
-    Server.bind((HOST, PORT))
-    print("Socket bound")
-    Server.listen()
-    print("Server listening")
-    Client, addr = Server.accept()
-    print(f"Socket accepted, client {Client}:{addr} connected")
-    dataInput = "1"
-    Client.send(str(dataInput).encode())
-    return 0
+def readAck(Client):
+    print("Awaiting ack")
+    dataFromClient = Client.recv(1024)
+    decoded_data = dataFromClient.decode()
+    print("Receved ack")
+    return decoded_data

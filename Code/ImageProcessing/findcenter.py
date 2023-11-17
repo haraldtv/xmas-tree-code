@@ -2,12 +2,30 @@ import numpy as np
 import cv2
 
 from object_diameter import diameter
-from socket_communication import sendPos, sendJoint, readPos
+from socket_communication import sendPos, sendJoint, readPos, readAck
 
+def emptyCord():
+    return [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+
+# Function to translate between "camera" coordinate plane and the robots coordinate plane. These are offset by 45degrees
+def transformxy(q):
+    r = emptyCord()
+    # x value
+    r[0] += q[0] / 2
+    r[1] += q[0] / 2
+    # y value
+    r[0] += q[1] / 2
+    r[1] -= q[1] / 2
+    return r
+
+# This finds the christmas ornamnt assuming the camera has the christmas ornaments in frame and is orientet roughly in front of the ornament
+# 
 def findcenter(linear, Client):
     if linear == 1:
         cam = cv2.VideoCapture(0)
         p = readPos(Client)
+        p1 = p
+        q = emptyCord()
         print("Position 1: ", p)
         ret, frame = cam.read()
         height, width = frame.shape[:2]
@@ -16,17 +34,22 @@ def findcenter(linear, Client):
         d1, a1, b1, = diameter(frame, 0)
 
         # Move robot 5cm along z axis
-        p[2] += 0.05
+        p[2] += 0.025
+        q[2] = 0.025
         print("Position 2: ", p)
-        sendPos(p, Client)
+        sendPos(transformxy(q), Client)
+        readAck(Client)
         # Get current location of object in frame
         ret, frame = cam.read()
         d2, a2, b2, = diameter(frame, 0)
 
         # Move robot 5cm along y axis
         p[1] += 0.05
-        print("Position 3: ", p)
-        sendPos(p, Client)
+        q = emptyCord()
+        q[1] = 0.05
+        print("Position 3: ", q)
+        sendPos(transformxy(q), Client)
+        readAck(Client)
 
         ret, frame = cam.read()
         d3, a3, b3, = diameter(frame, 0)
@@ -37,10 +60,15 @@ def findcenter(linear, Client):
         deltay = ( (width / 2) - a3 ) * yrelation
         deltaz = ( (height / 2) - b3 ) * zrelation
 
+        q = emptyCord()
         p[1] = deltay
         p[2] = deltaz
 
-        sendPos(p, Client)
+        q[1] = deltay
+        q[2] = deltaz
+
+        sendPos(transformxy(q), Client)
+        readAck(Client)
 
         return (p)
     
