@@ -6,14 +6,16 @@ from detectxy import findxy
 from object_diameter import diameter
 from calibrationvalues import linearInterp
 
-def distance(image):
+def distance(frame):
 
-    d, x1, y1 = diameter(image, 0)
+    d, x1, y1 = diameter(frame, 0)
 
-    frame = cv2.imread(image)
+    #frame = cv2.imread(image)
 
     origo_x = frame.shape[0] / 2
     origo_y = frame.shape[1] / 2
+
+    x = 2
 
     if len(x) == 2:
         x = linearInterp[0]

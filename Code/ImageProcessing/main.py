@@ -12,11 +12,25 @@ from findcenter import findcenter
 
 print("v 0.7")
 
+HOST = "192.168.12.84"
+PORT = 2222
+
 Server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-findcenter(1, Server)
+Server.bind((HOST, PORT))
+Server.listen()
+Client, addr = Server.accept()
+print(f"Socket accepted, client {Client}:{addr} connected")
+
+print("Findcenter start")
+findcenter(1, Client)
+print("Findcenter end")
 cam = cv2.VideoCapture(0)
 ret, frame = cam.read()
 d = distance(frame)
+
+
+Server.close
+
 
 
 # print(diameter("/Users/harald/Documents/GitHub/xmas-tree-decorator/Code/ImageProcessing/cup_65.png"))
