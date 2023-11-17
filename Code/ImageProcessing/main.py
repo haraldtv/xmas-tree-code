@@ -1,15 +1,35 @@
 import cv2 as cv2 
 import numpy as np
 from ultralytics import YOLO
+import socket
 
-from detectxy import findxy
-from mergecoordinates import merge
-from object_diameter import diameter
+# from detectxy import findxy
+# from mergecoordinates import merge
+# from object_diameter import diameter
 from distance import distance
-from calculateangle import calculatePos
+# from calculateangle import calculatePos
+from findcenter import findcenter
 
-while 1:
-    print(1)
+print("v 0.7")
+
+HOST = "192.168.12.84"
+PORT = 2222
+
+Server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+Server.bind((HOST, PORT))
+Server.listen()
+Client, addr = Server.accept()
+print(f"Socket accepted, client {Client}:{addr} connected")
+
+print("Findcenter start")
+findcenter(1, Client)
+print("Findcenter end")
+cam = cv2.VideoCapture(0)
+ret, frame = cam.read()
+d = distance(frame)
+
+
+Server.close
 
 
 

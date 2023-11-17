@@ -4,17 +4,16 @@ import cv2
 from ultralytics import YOLO
 from leastsquarecircle import mls
 
-def diameter(image, mode):
+def diameter(frame, debug):
     OBJECT = 41
     # model = YOLO('/Users/harald/Documents/GitHub/xmas-tree-decorator/Code/Model/runs/detect/train/weights/last.pt')
     model = YOLO('/Users/harald/Documents/GitHub/xmas-tree-decorator/Code/ImageProcessing/kevin2023-11-10.pt')
 
-    if mode == 1:
-        frame = cv2.imread(image, cv2.IMREAD_COLOR)
-    elif mode == 0:
-        frame = image
+    cam = cv2.VideoCapture(0)
+    ret, frame = cam.read()
+    image = frame
 
-    results = model(image)
+    results = model(frame)
     x = []
     y = []
 
@@ -40,14 +39,18 @@ def diameter(image, mode):
     x = np.matrix(x).T
     y = np.matrix(y).T
 
-    print(np.block([x,y]).tolist())
+    # print(np.block([x,y]).tolist())
     circle = mls(np.block([x,y]).tolist())
 
-    fig, ax = plt.subplots()
-    ax.scatter(xp,yp)
-    ax.imshow(np.flip(frame, axis=-1))
-    ax.add_patch(plt.Circle((circle[0], circle[1]), circle[2], color='black', fill=False))
-    plt.show()
+    if debug == 0:
+        return circle[2] * 2, circle[0], circle[1]
+
+
+    # fig, ax = plt.subplots()
+    # ax.scatter(xp,yp)
+    # ax.imshow(np.flip(frame, axis=-1))
+    # ax.add_patch(plt.Circle((circle[0], circle[1]), circle[2], color='black', fill=False))
+    # plt.show()
 
     # Need to add some checks for this to ensure min and max value is at aapproximately the same y value, but works for now if object is vertically symetrical
     # Could take the distance between the x values at the same y values, and then find the max
@@ -56,3 +59,5 @@ def diameter(image, mode):
     # diameter = (max(x) - min(x))
 
     return circle[2] * 2, circle[0], circle[1]
+
+print("--", diameter("/Users/harald/Documents/GitHub/xmas-tree-code/Code/ImageProcessing/25_5.png", 1))
