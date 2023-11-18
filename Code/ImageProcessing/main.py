@@ -8,7 +8,8 @@ import socket
 # from object_diameter import diameter
 from distance import distance
 # from calculateangle import calculatePos
-from findcenter import findcenter
+from findcenter import findcenter, emptyCord
+from socket_communication import sendPos, readAck
 
 print("v 0.7")
 
@@ -26,8 +27,21 @@ findcenter(1, Client)
 print("Findcenter end")
 cam = cv2.VideoCapture(0)
 ret, frame = cam.read()
-d = distance(frame)
 
+d = distance(frame)
+print(d)
+
+# Add camera offset
+q = emptyCord()
+q[2] = 0.06
+sendPos(q, Client)
+readAck(Client)
+
+# Distance to sphere center
+q = emptyCord()
+q[1] = (d-10)/1000
+sendPos(q, Client)
+readAck(Client)
 
 Server.close
 

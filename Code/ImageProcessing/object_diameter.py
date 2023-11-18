@@ -7,11 +7,14 @@ from leastsquarecircle import mls
 def diameter(frame, debug):
     OBJECT = 41
     # model = YOLO('/Users/harald/Documents/GitHub/xmas-tree-decorator/Code/Model/runs/detect/train/weights/last.pt')
-    model = YOLO('/Users/harald/Documents/GitHub/xmas-tree-decorator/Code/ImageProcessing/kevin2023-11-10.pt')
+    model = YOLO('/Users/harald/Documents/GitHub/xmas-tree-code/Code/ImageProcessing/kevin2023-11-10.pt')
 
-    cam = cv2.VideoCapture(0)
-    ret, frame = cam.read()
-    image = frame
+    # cam = cv2.VideoCapture(0)
+    # ret, frame = cam.read()
+    # image = frame
+
+    # calibration_image = '/Users/harald/Documents/GitHub/xmas-tree-code/Code/ImageProcessing/19_kule.png'
+    # frame = calibration_image
 
     results = model(frame)
     x = []
@@ -48,7 +51,9 @@ def diameter(frame, debug):
 
     # fig, ax = plt.subplots()
     # ax.scatter(xp,yp)
-    # ax.imshow(np.flip(frame, axis=-1))
+    # # ax.imshow(np.flip(frame, axis=-1))
+    # ax.imshow(np.flip(frame))
+    # # ax.imshow(calibration_image)
     # ax.add_patch(plt.Circle((circle[0], circle[1]), circle[2], color='black', fill=False))
     # plt.show()
 
@@ -60,4 +65,4 @@ def diameter(frame, debug):
 
     return circle[2] * 2, circle[0], circle[1]
 
-print("--", diameter("/Users/harald/Documents/GitHub/xmas-tree-code/Code/ImageProcessing/25_5.png", 1))
+print("--", diameter("/Users/harald/Documents/GitHub/xmas-tree-code/Code/ImageProcessing/19_kule.png", 1))
