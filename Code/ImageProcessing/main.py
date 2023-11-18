@@ -8,10 +8,10 @@ import socket
 # from object_diameter import diameter
 from distance import distance
 # from calculateangle import calculatePos
-from findcenter import findcenter, emptyCord
+from findcenter import findcenter, emptyCord, transformxy
 from socket_communication import sendPos, readAck
 
-print("v 0.7")
+print("v 0.8")
 
 HOST = "192.168.12.84"
 PORT = 2222
@@ -39,8 +39,8 @@ readAck(Client)
 
 # Distance to sphere center
 q = emptyCord()
-q[1] = (d-10)/1000
-sendPos(q, Client)
+q[0] = (d-4.5)/100
+sendPos(transformxy(q), Client)
 readAck(Client)
 
 Server.close

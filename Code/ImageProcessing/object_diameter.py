@@ -13,7 +13,7 @@ def diameter(frame, debug):
     # ret, frame = cam.read()
     # image = frame
 
-    # calibration_image = '/Users/harald/Documents/GitHub/xmas-tree-code/Code/ImageProcessing/19_kule.png'
+    # calibration_image = '/Users/harald/Documents/GitHub/xmas-tree-code/Code/ImageProcessing/kul_295.png'
     # frame = calibration_image
 
     results = model(frame)
@@ -51,8 +51,8 @@ def diameter(frame, debug):
 
     # fig, ax = plt.subplots()
     # ax.scatter(xp,yp)
-    # # ax.imshow(np.flip(frame, axis=-1))
-    # ax.imshow(np.flip(frame))
+    # ax.imshow(np.flip(frame, axis=-1))
+    # # ax.imshow(np.flip(frame))
     # # ax.imshow(calibration_image)
     # ax.add_patch(plt.Circle((circle[0], circle[1]), circle[2], color='black', fill=False))
     # plt.show()
@@ -65,4 +65,4 @@ def diameter(frame, debug):
 
     return circle[2] * 2, circle[0], circle[1]
 
-print("--", diameter("/Users/harald/Documents/GitHub/xmas-tree-code/Code/ImageProcessing/19_kule.png", 1))
+# print("--", diameter("/Users/harald/Documents/GitHub/xmas-tree-code/Code/ImageProcessing/kule_29.png", 1))

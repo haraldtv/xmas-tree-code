@@ -12,6 +12,7 @@ def distance(frame):
     # ret, frame = cam.read()
 
     d, x1, y1 = diameter(frame, 0)
+    print("Diameter: ", d)
 
     # frame = cv2.imread(frame)
 
@@ -22,6 +23,7 @@ def distance(frame):
 
     if w == 2:
         x = linearInterp()[0]
+        print(x)
         y = linearInterp()[1]
 
         # Use the slope formula ( (y2-y1)=a(x2-x1) ) to interpolate the distance to diameter ratio
@@ -44,4 +46,7 @@ def distance(frame):
     print("Error: invalid input to function distance()")
     return
 
-print(distance('/Users/harald/Documents/GitHub/xmas-tree-code/Code/ImageProcessing/26_kule.png'))
+# cam = cv2.VideoCapture(0)
+# ret, frame = cam.read()
+# # print(distance("/Users/harald/Documents/GitHub/xmas-tree-code/Code/ImageProcessing/kul_225.png"))
+# print(distance(frame))
