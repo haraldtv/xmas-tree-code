@@ -8,18 +8,21 @@ from calibrationvalues import linearInterp
 
 def distance(frame):
 
+    # cam = cv2.VideoCapture(0)
+    # ret, frame = cam.read()
+
     d, x1, y1 = diameter(frame, 0)
 
-    #frame = cv2.imread(image)
+    # frame = cv2.imread(frame)
 
-    origo_x = frame.shape[0] / 2
-    origo_y = frame.shape[1] / 2
+    # origo_x = frame.shape[0] / 2
+    # origo_y = frame.shape[1] / 2
 
-    x = [1,2]
+    w = 2
 
-    if len(x) == 2:
-        x = linearInterp[0]
-        y = linearInterp[1]
+    if w == 2:
+        x = linearInterp()[0]
+        y = linearInterp()[1]
 
         # Use the slope formula ( (y2-y1)=a(x2-x1) ) to interpolate the distance to diameter ratio
         # This assumes the relationship can be modelled as a linear function
@@ -40,3 +43,5 @@ def distance(frame):
 
     print("Error: invalid input to function distance()")
     return
+
+print(distance('/Users/harald/Documents/GitHub/xmas-tree-code/Code/ImageProcessing/26_kule.png'))
