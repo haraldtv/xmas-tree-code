@@ -29,7 +29,7 @@ cam = cv2.VideoCapture(0)
 ret, frame = cam.read()
 
 d = distance(frame)
-print(d)
+print("Distance: ", d)
 
 # Add camera offset
 q = emptyCord()
@@ -39,7 +39,7 @@ readAck(Client)
 
 # Distance to sphere center
 q = emptyCord()
-q[0] = (d-4.5)/100
+q[0] = (d-4)/100
 sendPos(transformxy(q), Client)
 readAck(Client)
 

@@ -15,16 +15,7 @@ def postolist(str):
         lst[i] = float(lst[i])
     return lst
 
-
 def readPos(Client):
-    # Server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    # print("Socket read started")
-    # Server.bind((HOST, PORT))
-    # print("Socket bound")
-    # Server.listen()
-    # print("Server listening")
-    # Client, addr = Server.accept()
-    # print(f"Socket accepted, client {Client}:{addr} connected")
     dataFromClient = Client.recv(1024)
     decoded_data = dataFromClient.decode()
     return postolist(decoded_data)

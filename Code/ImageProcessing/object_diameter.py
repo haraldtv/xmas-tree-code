@@ -9,9 +9,9 @@ def diameter(frame, debug):
     # model = YOLO('/Users/harald/Documents/GitHub/xmas-tree-decorator/Code/Model/runs/detect/train/weights/last.pt')
     model = YOLO('/Users/harald/Documents/GitHub/xmas-tree-code/Code/ImageProcessing/kevin2023-11-10.pt')
 
-    # cam = cv2.VideoCapture(0)
-    # ret, frame = cam.read()
-    # image = frame
+    cam = cv2.VideoCapture(0)
+    ret, frame = cam.read()
+    image = frame
 
     # calibration_image = '/Users/harald/Documents/GitHub/xmas-tree-code/Code/ImageProcessing/kul_295.png'
     # frame = calibration_image
