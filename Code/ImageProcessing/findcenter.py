@@ -10,6 +10,7 @@ def emptyCord():
 
 # Function to translate between "camera" coordinate plane and the robots coordinate plane. These are offset by 45degrees
 def transformxy(q):
+    # emptyCord returns the list [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
     r = emptyCord()
     # x value
     r[0] += q[0] / 2

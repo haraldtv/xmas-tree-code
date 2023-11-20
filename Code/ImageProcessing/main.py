@@ -39,7 +39,7 @@ readAck(Client)
 
 # Distance to sphere center
 q = emptyCord()
-q[0] = (d-4)/100
+q[0] = (d-6)/100
 sendPos(transformxy(q), Client)
 readAck(Client)
 
