@@ -13,7 +13,7 @@ from socket_communication import sendPos, readAck
 
 print("v 0.8")
 
-HOST = "192.168.12.84"
+HOST = "192.168.12.81"
 PORT = 2222
 
 Server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
